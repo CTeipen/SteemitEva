@@ -9,7 +9,7 @@ $("#result-table").ready(function(){
 // und der Handler für den Submit-Bottun gesetzt
 $(document).ready(function() {
 
-  // $("#checkboxPlusUpvotes").change(function(){handlePlusCheckboxes("checkboxPlusUpvotes")});
+  $("#checkboxPlusUpvotes").change(function(){handlePlusCheckboxes("checkboxPlusUpvotes")});
   // $("#checkboxPlusComments").change(function(){handlePlusCheckboxes("checkboxPlusComments")});
   // $("#checkboxPlusResteems").change(function(){handlePlusCheckboxes("checkboxPlusResteems")});
 
@@ -76,27 +76,30 @@ function buildTableHead(){
   var tableTheadRow = $("#result-table thead tr");
   var wantedFields = $('#inputTableFields').tagsinput('items');
 
+  console.log(wantedFields);
+
   tableTheadRow.empty();
 
-  for (var i = 0; i < tabeleHeadFields.length; i++) {
+  for (var i = 0; i < wantedFields.length; i++) {
 
-    if(tabeleHeadFields[i].title != "" && wantedFields.includes(tabeleHeadFields[i].title)){
+    var field = getFieldObj(wantedFields[i]);
+    if(field != undefined && field.title != ""){
 
       var str = '<th';
 
-      if(tabeleHeadFields[i].dataSortable != ""){
-        str+= ' data-sortable="' + tabeleHeadFields[i].dataSortable + '"';
+      if(field.dataSortable != ""){
+        str+= ' data-sortable="' + field.dataSortable + '"';
       }
 
-      if(tabeleHeadFields[i].dataFormatter != ""){
-        str+= ' data-formatter="' + tabeleHeadFields[i].dataFormatter + '"';
+      if(field.dataFormatter != ""){
+        str+= ' data-formatter="' + field.dataFormatter + '"';
       }
 
-      if(tabeleHeadFields[i].datafield != ""){
-        str+= ' data-field="' + tabeleHeadFields[i].datafield + '"';
+      if(field.datafield != ""){
+        str+= ' data-field="' + field.datafield + '"';
       }
 
-      str += ' scope="col">' + tabeleHeadFields[i].title + '</th>';
+      str += ' scope="col">' + field.title + '</th>';
 
 
       tableTheadRow.append(str);
@@ -116,7 +119,7 @@ function fillUIWithData(){
 
   for (var i = 0; i < dataList.length; i++) {
 
-    var parVote = ((dataList[i].mainUpvote.percent != undefined) ? dataList[i].mainUpvote.percent / 100  + "%" : "/");
+    var parVote = ((dataList[i].mainUpvote.percent != undefined) ? dataList[i].mainUpvote.percent / 100 : 0);
     var comVotes = ((dataList[i].comment != "") ? dataList[i].comment.net_votes : 0);
     var kommentar = ((dataList[i].comment != "") ? dataList[i].comment : undefined);
     var kommentarZaehler = ((dataList[i].commentCount != undefined) ? dataList[i].commentCount : 0);
@@ -147,6 +150,8 @@ function fillUIWithData(){
 
   $("#loading").fadeOut();
   $("#prost i").removeClass("fa-spin");
+
+  console.log(dataSet);
 
   $('#result-table').bootstrapTable({
     data: dataSet
@@ -279,7 +284,7 @@ function handleTableFieldTags(){
   $('#checkboxPlusResteems').prop("checked", false);
 
   for (var i = 0; i < tableFields.postVotes.length; i++) {
-    $('#inputTableFields').tagsinput('add', tableFields.postVotes[i]);
+    $('#inputTableFields').tagsinput('add', tableFields.postVotes[i].title);
   }
 
   $('input[type=radio][name=postDatenbasis]').change(function() {
@@ -306,12 +311,12 @@ function handleTableFieldTags(){
     }
 
     for (var i = 0; i < tags.length; i++) {
-      $('#inputTableFields').tagsinput('add', tags[i]);
+      $('#inputTableFields').tagsinput('add', tags[i].title);
     }
 
     $('#inputTableFields').tagsinput('refresh');
 
-    //handlePlusInformation(this.value);
+    handlePlusInformation(this.value);
 
   });
 
@@ -341,13 +346,13 @@ function handlePlusCheckboxes(box) {
   if($('#'+box).prop("checked")){
 
     for (var i = 0; i < tags.length; i++) {
-      $('#inputTableFields').tagsinput('add', tags[i]);
+      $('#inputTableFields').tagsinput('add', tags[i].title);
     }
 
   }else{
 
     for (var i = 0; i < tags.length; i++) {
-      $('#inputTableFields').tagsinput('remove', tags[i]);
+      $('#inputTableFields').tagsinput('remove', tags[i].title);
     }
 
   }
@@ -366,31 +371,27 @@ function handlePlusInformation(selected) {
   var comCB = $("#checkboxPlusComments");
   var reCB = $("#checkboxPlusResteems");
 
+  upCB.prop("checked", false);
+  comCB.prop("checked", false);
+  reCB.prop("checked", false);
+
   switch (selected) {
     case queueFunction.POSTVOTES:
       up.addClass("hidden");
-      upCB.prop("checked", false);
-
       com.removeClass("hidden");
       re.removeClass("hidden");
       break;
 
     case queueFunction.POSTCOMMENTS:
       up.removeClass("hidden");
-
       com.addClass("hidden");
-      comCB.prop("checked", false);
-
       re.removeClass("hidden");
       break;
 
     case queueFunction.POSTRESTEEMS:
       up.removeClass("hidden");
       com.removeClass("hidden");
-
       re.addClass("hidden");
-      reCB.prop("checked", false);
-
       break;
 
     default:

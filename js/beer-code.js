@@ -25,7 +25,7 @@ function evaluate(_callback){
                                         for(var y = 1; y < queueFunctions.length; y++){
                                           plusSwitch(queueFunctions[y], function(){
                                             if(y == queueFunctions.length - 1){
-                                              _callback();
+                                              //_callback();
                                             }
                                           });
                                         }
@@ -36,7 +36,7 @@ function evaluate(_callback){
                                           for(var y = 1; y < queueFunctions.length; y++){
                                             plusSwitch(queueFunctions[y], function(){
                                               if(y == queueFunctions.length - 1){
-                                                _callback();
+                                                //_callback();
                                               }
                                             });
                                           }
@@ -62,7 +62,7 @@ function evaluate(_callback){
                                           for(var y = 1; y < queueFunctions.length; y++){
                                             plusSwitch(queueFunctions[y], function(){
                                               if(y == queueFunctions.length - 1){
-                                                _callback();
+                                                //_callback();
                                               }
                                             });
                                           }
@@ -133,7 +133,7 @@ function plusSwitch(expression, _callbackPlus) {
   switch (expression) {
 
     case queueFunction.PLUSVOTES:
-      //getMainPostVotesPlus();
+      getMainPostVotesPlus();
       _callbackPlus();
       break;
 
@@ -154,7 +154,8 @@ function plusSwitch(expression, _callbackPlus) {
     //         }
     //       }
     //     }
-    // 
+    //
+
         _callbackPlus();
       //});
       break;
@@ -212,8 +213,6 @@ function getMainPostVotesPlus(){
     }
 
   }
-
-  console.log(dataList);
 
 }
 
