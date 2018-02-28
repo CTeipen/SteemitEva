@@ -34,6 +34,7 @@
     <script src="js/bootstrap-tagsinput.js"></script>
     <script src="extensions/export/bootstrap-table-export.js"></script>
     <script type="text/javascript" src="extensions/export/tableExport.min.js"></script>
+    <script type="text/javascript" src="extensions/key-events/bootstrap-table-key-events.min.js"></script>
 
     <script src="js/beer-data.js"></script>
     <script src="js/beer-ui.js"></script>
@@ -259,11 +260,15 @@
         <div id="auswertung" class="container-fluid" style="padding: 0 15px;">
             <table id="result-table"
             class="table table-striped"
-            data-sort-name="wertung"
-            data-sort-order="desc"
+            data-toggle="table"
+            data-show-toggle="true"
+            data-show-columns="true"
+            data-show-pagination-switch="true"
+            data-show-refresh="true"
+            data-search="true"
             data-pagination="true"
             data-search="true"
-            data-show-columns="true"
+            data-key-events="true"
             data-show-export="true">
               <thead>
                 <tr>

@@ -56,6 +56,13 @@ $(document).ready(function() {
 
     evaluate(function() {
       fillUIWithData();
+
+      var randomI = $('button[name=refresh] i');
+      randomI.removeClass('glyphicon-refresh icon-refresh');
+      randomI.addClass('glyphicon-random icon-random');
+
+      $('button[name=refresh]').prop('title', 'Randomize');
+      $('button[name=refresh]').click(randomizeTable);
     });
 
     //$("#eingabe").addClass("hidden");
@@ -63,11 +70,22 @@ $(document).ready(function() {
     return false;
    });
 
-
-
 });
 
 //--- INIT -- END
+
+function randomizeTable(){
+  dataList.shuffle();
+  $('#result-table').bootstrapTable("destroy");
+  fillUIWithData();
+
+  var randomI = $('button[name=refresh] i');
+  randomI.removeClass('glyphicon-refresh icon-refresh');
+  randomI.addClass('glyphicon-random icon-random');
+
+  $('button[name=refresh]').prop('title', 'Randomize');
+  $('button[name=refresh]').click(randomizeTable);
+}
 
 //--- Fill GUI ---
 
@@ -139,7 +157,7 @@ function fillUIWithData(){
       commentVotes: ((kommentar != undefined) ? kommentar.net_votes : "n/a"),
       commentReplies: ((kommentar != undefined) ? kommentar.children : "n/a"),
       commentCount: kommentarZaehler,
-      reblogged: dataList[i].mainResteemed ? "Ja" : "Nein",
+      reblogged: dataList[i].mainResteemed ? '<span class="label label-success">Ja</span>' : '<span class="label label-danger">Nein</span>',
       postVotes: "",
       wertung: ""
     };
