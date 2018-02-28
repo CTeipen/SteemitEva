@@ -22,51 +22,16 @@ function evaluate(_callback){
     switch (queueFunctions[0]) {
 
       case queueFunction.POSTVOTES:     getMainPostVotes();
-                                        for(var y = 1; y < queueFunctions.length; y++){
-                                          plusSwitch(queueFunctions[y], function(){
-                                            if(y == queueFunctions.length - 1){
-                                              //_callback();
-                                            }
-                                          });
-                                        }
-                                        _callback();
+                                        plusCallbackCheck(_callback);
                                         break;
 
       case queueFunction.POSTCOMMENTS:  getMainPostComments(function(){
-                                          for(var y = 1; y < queueFunctions.length; y++){
-                                            plusSwitch(queueFunctions[y], function(){
-                                              if(y == queueFunctions.length - 1){
-                                                //_callback();
-                                              }
-                                            });
-                                          }
-                                          _callback();
+                                          plusCallbackCheck(_callback);
                                         });
                                         break;
 
-      case queueFunction.POSTRESTEEMS:  getMainPostRebloggedBy(function(arr) {
-
-                                          for (var x = 0; x < arr.length; x++) {
-
-                                              dataList.push({
-                                                comment: "",
-                                                account: arr[x],
-                                                replyPostLink: "",
-                                                replyPost: '',
-                                                mainUpvote: "",
-                                                mainResteemed: true
-                                              });
-
-                                          }
-
-                                          for(var y = 1; y < queueFunctions.length; y++){
-                                            plusSwitch(queueFunctions[y], function(){
-                                              if(y == queueFunctions.length - 1){
-                                                //_callback();
-                                              }
-                                            });
-                                          }
-                                          _callback();
+      case queueFunction.POSTRESTEEMS:  getMainPostRebloggedBy(function() {
+                                          plusCallbackCheck(_callback);
                                         });
                                         break;
 
@@ -76,56 +41,22 @@ function evaluate(_callback){
 
   }
 
-/**
-  getMainPostComments(function(){
+}
 
-    getReplyPosts(function(arr){
+function plusCallbackCheck(_callback){
 
-      while (arr.length > 0) {
-
-        var replyPost = arr.shift();
-
-        for (var i = 0; i < dataList.length; i++) {
-
-          if(dataList[i].account == replyPost[1].author && dataList[i].replyPostLink.includes(replyPost[1].permlink)){
-
-            dataList[i].replyPost = replyPost[1];
-            break;
-
-          }
-
+  if(queueFunctions.length > 1){
+    for(var y = 1; y < queueFunctions.length; y++){
+      plusSwitch(queueFunctions[y], function(expression){
+        if(jQuery.inArray(expression, queueFunctions) == queueFunctions.length - 1){
+          _callback();
         }
-
-      }
-
-      if(queueFunctions.includes(queueFunction.POSTVOTES)){
-        getMainPostVotes();
-      }
-
-      getMainPostRebloggedBy(function(arr) {
-
-        for (var i = 0; i < arr.length; i++) {
-
-          for (var x = 0; x < dataList.length; x++) {
-
-            if(arr[i] == dataList[x].account){
-
-              dataList[x].mainResteemed = true;
-
-            }
-
-          }
-
-        }
-
-        fillUIWithData();
-
       });
+    }
+  } else {
+    _callback();
+  }
 
-    });
-
-  });
-**/
 }
 
 function plusSwitch(expression, _callbackPlus) {
@@ -134,30 +65,28 @@ function plusSwitch(expression, _callbackPlus) {
 
     case queueFunction.PLUSVOTES:
       getMainPostVotesPlus();
-      _callbackPlus();
+      _callbackPlus(queueFunction.PLUSVOTES);
       break;
 
     case queueFunction.PLUSCOMMENTS:
       //getMainPostCommentsPlus(function() {
-        _callbackPlus();
+        _callbackPlus(queueFunction.PLUSCOMMENTS);
       //});
       break;
 
     case queueFunction.PLUSRESTEEMS:
-    // getMainPostRebloggedByPlus(function(arr){
-    //
-    //     for (var i = 0; i < arr.length; i++) {
-    //       for (var x = 0; x < dataList.length; x++) {
-    //         if(dataList[x].account == arr[i]){
-    //           dataList[x].mainResteemed = true;
-    //           console.log(dataList[x]);
-    //         }
-    //       }
-    //     }
-    //
+      getMainPostRebloggedByPlus(function(arr){
 
-        _callbackPlus();
-      //});
+        for (var i = 0; i < arr.length; i++) {
+          for (var x = 0; x < dataList.length; x++) {
+            if(dataList[x].account == arr[i]){
+              dataList[x].mainResteemed = true;
+            }
+          }
+        }
+
+        _callbackPlus(queueFunction.PLUSRESTEEMS);
+      });
       break;
 
     default:
@@ -187,8 +116,23 @@ function getMainPostRebloggedBy(_callback){
 
     if(result != undefined){
 
-      _callback(result);
+      for (var x = 0; x < result.length; x++) {
 
+          dataList.push({
+            comment: "",
+            account: result[x],
+            replyPostLink: "",
+            replyPost: '',
+            mainUpvote: "",
+            mainResteemed: true
+          });
+
+      }
+
+      _callback();
+
+    }else{
+      _callback();
     }
 
   });

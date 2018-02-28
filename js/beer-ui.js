@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   $("#checkboxPlusUpvotes").change(function(){handlePlusCheckboxes("checkboxPlusUpvotes")});
   // $("#checkboxPlusComments").change(function(){handlePlusCheckboxes("checkboxPlusComments")});
-  // $("#checkboxPlusResteems").change(function(){handlePlusCheckboxes("checkboxPlusResteems")});
+  $("#checkboxPlusResteems").change(function(){handlePlusCheckboxes("checkboxPlusResteems")});
 
   handleTableFieldTags();
 
@@ -76,7 +76,7 @@ function buildTableHead(){
   var tableTheadRow = $("#result-table thead tr");
   var wantedFields = $('#inputTableFields').tagsinput('items');
 
-  console.log(wantedFields);
+  //console.log(wantedFields);
 
   tableTheadRow.empty();
 
@@ -151,7 +151,7 @@ function fillUIWithData(){
   $("#loading").fadeOut();
   $("#prost i").removeClass("fa-spin");
 
-  console.log(dataSet);
+  //console.log(dataSet);
 
   $('#result-table').bootstrapTable({
     data: dataSet
@@ -450,7 +450,7 @@ function handleSaveSettings(){
    }
   }
 
-  console.log(queueFunctions);
+  //console.log(queueFunctions);
 
   return errorList;
 
