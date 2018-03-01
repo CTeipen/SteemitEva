@@ -13,6 +13,7 @@ The table being displayed after the evaluation can be modified according to your
 ## Contribute
 + [Code](https://github.com/CTeipen/SteemitEva)
 + [Report an Isssue](https://github.com/CTeipen/SteemitEva/issues)
++ [Projektboard](https://github.com/CTeipen/SteemitEva/projects/1)
 
 
 ## License
