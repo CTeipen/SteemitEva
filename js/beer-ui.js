@@ -10,8 +10,9 @@ $("#result-table").ready(function(){
 $(document).ready(function() {
 
   $("#checkboxPlusUpvotes").change(function(){handlePlusCheckboxes("checkboxPlusUpvotes")});
-  // $("#checkboxPlusComments").change(function(){handlePlusCheckboxes("checkboxPlusComments")});
+  $("#checkboxPlusComments").change(function(){handlePlusCheckboxes("checkboxPlusComments")});
   $("#checkboxPlusResteems").change(function(){handlePlusCheckboxes("checkboxPlusResteems")});
+  $("#checkboxPlusFollower").change(function(){handlePlusCheckboxes("checkboxPlusFollower")});
 
   handleTableFieldTags();
 
@@ -53,6 +54,9 @@ $(document).ready(function() {
     $('#result-table').bootstrapTable("destroy");
 
     var tmp = handleSaveSettings();
+
+    $('#evaluation-title').empty();
+    $('#evaluation-title').append(getEvaluationTitle());
 
     evaluate(function() {
       fillUIWithData();
@@ -129,6 +133,62 @@ function buildTableHead(){
 
 }
 
+function getEvaluationTitle(){
+
+  var title = "";
+
+  for (var i = 0; i < queueFunctions.length; i++) {
+
+    switch (queueFunctions[i]) {
+
+      case queueFunction.POSTVOTES:
+      case queueFunction.PLUSVOTES: title += "Upvotes";
+                                    break;
+
+      case queueFunction.POSTCOMMENTS:
+      case queueFunction.PLUSCOMMENTS: title += "Kommentare";
+                                      break;
+
+      case queueFunction.POSTRESTEEMS:
+      case queueFunction.PLUSRESTEEMS: title += "Resteems";
+                                    break;
+
+      case queueFunction.PLUSFOLLOWER: title += "Follower";
+                                    break;
+
+      case queueFunction.COMMENTLINKS: title += "Kommentarlinks";
+                                    break;
+
+      case queueFunction.AUSWERTUNG: title += "Auswertung";
+                                    break;
+
+        break;
+      default:
+
+    }
+
+    if(queueFunctions.length > 1){
+
+      if(i == 0){
+
+        title += "<br><small>";
+
+      }else if(i < queueFunctions.length - 1){
+
+        title += ", ";
+
+      }else if(i < queueFunctions.length){
+
+        title += "</small>";
+
+      }
+    }
+  }
+
+  return title;
+
+}
+
 function fillUIWithData(){
 
   buildTableHead();
@@ -157,9 +217,10 @@ function fillUIWithData(){
       commentVotes: ((kommentar != undefined) ? kommentar.net_votes : "n/a"),
       commentReplies: ((kommentar != undefined) ? kommentar.children : "n/a"),
       commentCount: kommentarZaehler,
-      reblogged: dataList[i].mainResteemed ? '<span class="label label-success">Ja</span>' : '<span class="label label-danger">Nein</span>',
+      reblogged: dataList[i].mainResteemed ? '<i class="text-success glyphicon glyphicon-ok"></i>' : '<i class="text-danger glyphicon glyphicon-remove"></i>',
       postVotes: "",
-      wertung: ""
+      wertung: "",
+      follower: dataList[i].following ? '<i class="text-success glyphicon glyphicon-ok"></i>' : '<i class="text-danger glyphicon glyphicon-remove"></i>'
     };
 
     dataSet.push(row);
@@ -300,6 +361,7 @@ function handleTableFieldTags(){
   $('#checkboxPlusUpvotes').prop("checked", false);
   $('#checkboxPlusComments').prop("checked", false);
   $('#checkboxPlusResteems').prop("checked", false);
+  $('#checkboxPlusFollower').prop("checked", false);
 
   for (var i = 0; i < tableFields.postVotes.length; i++) {
     $('#inputTableFields').tagsinput('add', tableFields.postVotes[i].title);
@@ -357,6 +419,10 @@ function handlePlusCheckboxes(box) {
       tags = tableFields.plusResteems;
       break;
 
+    case queueFunction.PLUSFOLLOWER:
+      tags = tableFields.plusFollower;
+      break;
+
     default:
     break;
   }
@@ -384,32 +450,38 @@ function handlePlusInformation(selected) {
   var up = $("#plusUpvotes");
   var com = $("#plusComments");
   var re = $("#plusResteems");
+  var fol = $("#plusFollower");
 
   var upCB = $("#checkboxPlusUpvotes");
   var comCB = $("#checkboxPlusComments");
   var reCB = $("#checkboxPlusResteems");
+  var folCB = $("#checkboxPlusFollower");
 
   upCB.prop("checked", false);
   comCB.prop("checked", false);
   reCB.prop("checked", false);
+  folCB.prop("checked", false);
 
   switch (selected) {
     case queueFunction.POSTVOTES:
       up.addClass("hidden");
       com.removeClass("hidden");
       re.removeClass("hidden");
+      fol.removeClass("hidden");
       break;
 
     case queueFunction.POSTCOMMENTS:
       up.removeClass("hidden");
       com.addClass("hidden");
       re.removeClass("hidden");
+      fol.removeClass("hidden");
       break;
 
     case queueFunction.POSTRESTEEMS:
       up.removeClass("hidden");
       com.removeClass("hidden");
       re.addClass("hidden");
+      fol.removeClass("hidden");
       break;
 
     default:
@@ -450,6 +522,10 @@ function handleSaveSettings(){
    queueFunctions.push(queueFunction.PLUSRESTEEMS);
   }
 
+  if($("#checkboxPlusFollower").prop("checked")){
+   queueFunctions.push(queueFunction.PLUSFOLLOWER);
+  }
+
   // -----------------------------------------------------
 
   if($("#checkboxPostCommentsLinks").prop("checked")){
@@ -487,7 +563,9 @@ function handleInputAuthor(){
 
       steem.api.getAccounts([parent], function(err, result) {
 
-        changeInputState(result.length, "Author");
+        if(result != undefined){
+          changeInputState(result.length, "Author");
+        }
 
       });
 

@@ -69,9 +69,9 @@ function plusSwitch(expression, _callbackPlus) {
       break;
 
     case queueFunction.PLUSCOMMENTS:
-      //getMainPostCommentsPlus(function() {
+      getMainPostCommentsPlus(function() {
         _callbackPlus(queueFunction.PLUSCOMMENTS);
-      //});
+      });
       break;
 
     case queueFunction.PLUSRESTEEMS:
@@ -86,6 +86,21 @@ function plusSwitch(expression, _callbackPlus) {
         }
 
         _callbackPlus(queueFunction.PLUSRESTEEMS);
+      });
+      break;
+
+    case queueFunction.PLUSFOLLOWER:
+      getFollowers(function(arr){
+
+        for (var i = 0; i < arr.length; i++) {
+          for (var x = 0; x < dataList.length; x++) {
+            if(dataList[x].account == arr[i].follower){
+              dataList[x].following = true;
+            }
+          }
+        }
+
+        _callbackPlus(queueFunction.PLUSFOLLOWER);
       });
       break;
 
@@ -124,7 +139,8 @@ function getMainPostRebloggedBy(_callback){
             replyPostLink: "",
             replyPost: '',
             mainUpvote: "",
-            mainResteemed: true
+            mainResteemed: true,
+            following: false
           });
 
       }
@@ -171,7 +187,8 @@ function getMainPostVotes(){
       replyPostLink: "",
       replyPost: '',
       mainUpvote: mainPost.active_votes[i],
-      mainResteemed: false
+      mainResteemed: false,
+      following: false
     });
 
   }
@@ -228,7 +245,8 @@ function getMainPostComments(_callback){
             replyPostLink: "",//jsonMetadata.links[0],
             replyPost: '',
             mainUpvote: 0,
-            mainResteemed: false
+            mainResteemed: false,
+            following: false
           });
 
           counter++;
@@ -278,6 +296,46 @@ function getMainPostCommentsPlus(_callback){
 
 }
 
+function getFollowerCount(_countCallback){
+  steem.api.getFollowCount(parent, function(err, result) {
+    //console.log(err, result);
+    if(result != undefined){
+      _countCallback(result.follower_count);
+    }
+  });
+}
+
+function getFollowers(_callback){
+  getFollowerCount(function(anzahl){
+
+    var follower = [];
+    var times = Math.ceil(anzahl / 1000);
+    var x = 0;
+
+    for (var i = 0; i < times; i++) {
+
+      getFollowerPart(i * 1000, function(arr){
+        $.merge(follower, arr);
+        x++;
+
+        if(x == times){
+          //console.log(follower);
+          _callback(follower);
+        }
+      });
+
+    }
+
+  });
+}
+
+function getFollowerPart(start, _callback){
+  steem.api.getFollowers(parent, start, 'blog', 1000, function(err, result) {
+    if(result != undefined){
+      _callback(result);
+    }
+  });
+}
 
 function $_GET(param) {
 	var vars = {};

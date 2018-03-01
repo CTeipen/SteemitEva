@@ -131,6 +131,17 @@
                 <small id="checkboxPlusResteemsHelp" class="form-text text-muted">Angabe, ob der User aus der Liste den Beitrag resteemed hat.</small>
               </div>
 
+              <div id="plusFollower" class="checkbox">
+                <label for="checkboxPlusFollower">
+
+                  <input type="checkbox" id="checkboxPlusFollower"
+                    aria-describedby="checkboxPlusFollowerHelp" value="plusFollower"> Follower
+
+                </label>
+                <br>
+                <small id="checkboxPlusFollowerHelp" class="form-text text-muted">Ist der angegebene Benutzer, Follower des Beitragautors.</small>
+              </div>
+
               <div class="checkbox hidden">
                 <label for="checkboxPostCommentsLinks">
 
@@ -258,6 +269,7 @@
         </div>
 
         <div id="auswertung" class="container-fluid" style="padding: 0 15px;">
+            <h3 id="evaluation-title">Auswertung</h3>
             <table id="result-table"
             class="table table-striped"
             data-toggle="table"

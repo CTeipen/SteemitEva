@@ -14,6 +14,7 @@ var queueFunction = {
   PLUSVOTES:    "plusVotes",
   PLUSCOMMENTS: "plusComments",
   PLUSRESTEEMS: "plusResteems",
+  PLUSFOLLOWER: "plusFollower",
   COMMENTLINKS: "postCommentLinks",
   AUSWERTUNG: "auswertung"
 }
@@ -102,6 +103,13 @@ var tableHeadEnum = {
     datafield: "wertung",
     title: "Wertung",
     dataSortable: "true"
+  },
+
+  follower: {
+    dataFormatter: "",
+    datafield: "follower",
+    title: "Follower",
+    dataSortable: "true"
   }
 }
 
@@ -152,7 +160,9 @@ var tableFields = {
 
   plusComments: [tableHeadEnum.commentCount],
 
-  plusResteems: [tableHeadEnum.reblogged]
+  plusResteems: [tableHeadEnum.reblogged],
+
+  plusFollower: [tableHeadEnum.follower]
 
 };
 
@@ -169,7 +179,8 @@ var tabeleHeadFields = [
   tableHeadEnum.commentCount,
   tableHeadEnum.reblogged,
   tableHeadEnum.postVotes,
-  tableHeadEnum.wertung
+  tableHeadEnum.wertung,
+  tableHeadEnum.follower
 ];
 
 function getFieldObj(fieldTitle){
