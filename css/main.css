@@ -8,16 +8,9 @@ html, body {
 }
 
 .slideout-menu {
-  position: fixed;
-  top: 0;
-  left: auto !important;
-  bottom: 0;
-  right: 0 !important;
-  z-index: 0;
-  width: 512px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  display: none;
+  width: 80%;
+  max-width: 512px;
+  min-width: 200px;
 }
 
 .slideout-menu h4, .slideout-menu h5{
@@ -47,10 +40,10 @@ Costum
 #myAlert{
   position: fixed;
   top: 0px;
-  left: 25%;
+  left: 10%;
   z-index: 99999;
   margin-top: 10px;
-  width: 50%;
+  width: 80%;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -101,7 +94,7 @@ Costum
 
 #slideout-btn{
   margin-top: 8px;
-  margin-right: 8px;
+  margin-left: 8px;
 }
 
 .fixed-table-pagination{
