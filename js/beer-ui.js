@@ -1,3 +1,4 @@
+//------------------------------------------------------------------------------
 // Die Ergebnistabelle und das Ladebild werden zuerst versteckt
 $("#result-table").ready(function(){
   $("#auswertung").hide();
@@ -5,9 +6,12 @@ $("#result-table").ready(function(){
   $("#loading").hide();
 });
 
+//------------------------------------------------------------------------------
 // Wenn die Seite geladen ist, werden die Input-Handler gesetzt (Author, Link)
 // und der Handler für den Submit-Bottun gesetzt
 $(document).ready(function() {
+
+  initSlideout();
 
   $("#checkboxPlusUpvotes").change(function(){handlePlusCheckboxes("checkboxPlusUpvotes")});
   $("#checkboxPlusComments").change(function(){handlePlusCheckboxes("checkboxPlusComments")});
@@ -61,44 +65,35 @@ $(document).ready(function() {
     evaluate(function() {
       fillUIWithData();
 
-      var randomI = $('button[name=refresh] i');
-      randomI.removeClass('glyphicon-refresh icon-refresh');
-      randomI.addClass('glyphicon-random icon-random');
-
+      $('button[name=refresh] i').removeClass('glyphicon-refresh icon-refresh');
+      $('button[name=refresh] i').addClass('glyphicon-random icon-random');
       $('button[name=refresh]').prop('title', 'Randomize');
-      $('button[name=refresh]').click(randomizeTable);
-    });
 
-    //$("#eingabe").addClass("hidden");
+    });
 
     return false;
    });
 
+   $('button[name=refresh]').click(function(){
+     dataList.shuffle();
+     $('#result-table').bootstrapTable("load", prepareData());
+   });
+
+   $( window ).resize(function() {
+     slideout.close();
+    refreshSlideout();
+  });
+
 });
 
-//--- INIT -- END
-
-function randomizeTable(){
-  dataList.shuffle();
-  $('#result-table').bootstrapTable("destroy");
-  fillUIWithData();
-
-  var randomI = $('button[name=refresh] i');
-  randomI.removeClass('glyphicon-refresh icon-refresh');
-  randomI.addClass('glyphicon-random icon-random');
-
-  $('button[name=refresh]').prop('title', 'Randomize');
-  $('button[name=refresh]').click(randomizeTable);
-}
-
-//--- Fill GUI ---
-
+//------------------------------------------------------------------------------
+// Hier werden die Spaltenköpfe zusammengebaut.
+// Sie sind abhängig von den Tags, die in der Einstellungen-Sidebar angegeben
+// werden können.
 function buildTableHead(){
 
   var tableTheadRow = $("#result-table thead tr");
   var wantedFields = $('#inputTableFields').tagsinput('items');
-
-  //console.log(wantedFields);
 
   tableTheadRow.empty();
 
@@ -121,18 +116,26 @@ function buildTableHead(){
         str+= ' data-field="' + field.datafield + '"';
       }
 
-      str += ' scope="col">' + field.title + '</th>';
+      if(field.datafiltercontrol != ""){
+        str+= ' data-filter-control="' + field.datafiltercontrol + '"';
+      }
 
+      str += ' scope="col">' + field.title + '</th>';
 
       tableTheadRow.append(str);
 
     }
+
   }
-
-
 
 }
 
+//------------------------------------------------------------------------------
+// Gibt den Titel der Evaluation zurück.
+// Er besteht aus einer <h3>-Überschritft in index.html und einer <small>-Unter-
+// überschrift innerhalb der Überschrift.
+// Die Überschrift betitelt die Datenbasis und die Unterüberschrift die
+// zusätzlich geladenen Daten.
 function getEvaluationTitle(){
 
   var title = "";
@@ -189,10 +192,7 @@ function getEvaluationTitle(){
 
 }
 
-function fillUIWithData(){
-
-  buildTableHead();
-
+function prepareData(){
   var dataSet = [];
 
   for (var i = 0; i < dataList.length; i++) {
@@ -217,15 +217,26 @@ function fillUIWithData(){
       commentVotes: ((kommentar != undefined) ? kommentar.net_votes : "n/a"),
       commentReplies: ((kommentar != undefined) ? kommentar.children : "n/a"),
       commentCount: kommentarZaehler,
-      reblogged: dataList[i].mainResteemed ? '<i class="text-success glyphicon glyphicon-ok"></i>' : '<i class="text-danger glyphicon glyphicon-remove"></i>',
+      reblogged: dataList[i].mainResteemed ? '✔' : 'x',
       postVotes: "",
       wertung: "",
-      follower: dataList[i].following ? '<i class="text-success glyphicon glyphicon-ok"></i>' : '<i class="text-danger glyphicon glyphicon-remove"></i>'
+      follower: dataList[i].following ? '✔' : 'x'
     };
 
     dataSet.push(row);
 
   }
+
+  return dataSet;
+}
+
+//------------------------------------------------------------------------------
+//
+function fillUIWithData(){
+
+  buildTableHead();
+
+  var dataSet = prepareData();
 
   $("#loading").fadeOut();
   $("#prost i").removeClass("fa-spin");
@@ -233,7 +244,9 @@ function fillUIWithData(){
   //console.log(dataSet);
 
   $('#result-table').bootstrapTable({
-    data: dataSet
+    data: dataSet,
+    pageList: [1,3,5,10,15,20,25,30,50,100,200],
+    escape: true
   });
 
   $("#result-table").fadeIn();
@@ -241,7 +254,6 @@ function fillUIWithData(){
 }
 
 // --- ALERTS ------------------------------------------------------------------
-
 // Der Oberfläche werden über diese Funktion Flächen eingeblendet, die die in
 // 'msg' gespeicherte Nachricht im Status 'state' anzeigen.
 //
@@ -291,6 +303,8 @@ function addAlert(state, msg){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function handleAlerts(){
   $('#myAlert .alert').on('closed.bs.alert', function () {
     $( this ).remove();
@@ -298,7 +312,7 @@ function handleAlerts(){
 }
 
 // --- CHECKGET ----------------------------------------------------------------
-
+//
 function checkGet(){
 
   var getAuthor = $_GET("author");
@@ -332,16 +346,24 @@ function checkGet(){
 }
 
 // --- SLIDEOUT ----------------------------------------------------------------
-
-window.onload = function() {
+//
+function initSlideout () {
 
   document.getElementById("menu").className =
   document.getElementById("menu").className.replace(/\bhidden\b/,'');
 
+  var padding = 512;
+  var x = $( window ).width() * 0.8;
+  if(x <= padding){
+    padding = x;
+  }
+
   slideout = new Slideout({
     'panel': document.getElementById('panel'),
     'menu': document.getElementById('menu'),
-    'side': 'right'
+    'side': 'left',
+    'padding': padding,
+    'tolerance': 70
   });
 
   document.querySelector('.js-slideout-toggle').addEventListener('click', function() {
@@ -351,11 +373,26 @@ window.onload = function() {
   document.querySelector('.menu').addEventListener('click', function(eve) {
     if (eve.target.nodeName === 'A') { slideout.close(); }
   });
+
 };
+
+function refreshSlideout() {
+
+  var padding = 512;
+  var x = $( window ).width() * 0.8;
+  if(x <= padding){
+    padding = x;
+  }
+
+  slideout._translateTo = padding;
+  slideout._padding = padding;
+}
 
 
 // --- HANDLER -----------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+//
 function handleTableFieldTags(){
 
   $('#checkboxPlusUpvotes').prop("checked", false);
@@ -402,6 +439,8 @@ function handleTableFieldTags(){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function handlePlusCheckboxes(box) {
 
   var tags = [];
@@ -445,6 +484,8 @@ function handlePlusCheckboxes(box) {
 
 }
 
+//------------------------------------------------------------------------------
+//
 function handlePlusInformation(selected) {
 
   var up = $("#plusUpvotes");
@@ -490,6 +531,8 @@ function handlePlusInformation(selected) {
 
 }
 
+//------------------------------------------------------------------------------
+//
 function handleSaveSettings(){
 
   var errorList = [];
@@ -544,12 +587,12 @@ function handleSaveSettings(){
    }
   }
 
-  //console.log(queueFunctions);
-
   return errorList;
 
 }
 
+//------------------------------------------------------------------------------
+//
 function handleInputAuthor(){
 
   $( "#inputAuthor" ).keyup(function() {
@@ -585,6 +628,8 @@ function handleInputAuthor(){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function handleInputLink(){
 
   $( "#inputLink" ).keyup(function() {
@@ -616,6 +661,8 @@ function handleInputLink(){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function changeInputState(respsonse, type){
 
   if(respsonse > 0){
@@ -659,6 +706,7 @@ function changeInputState(respsonse, type){
 
 }
 
+//------------------------------------------------------------------------------
 // Sorgt für konstante Indizes in der ersten Spalte der Tabelle
 function runningFormatter(value, row, index) {
     return index + 1;
