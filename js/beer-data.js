@@ -1,5 +1,6 @@
 // --- KONSTANTEN --------------------------------------------------------------
 
+//
 var alertStates = {
   INFO : "info",
   ERROR : "danger",
@@ -7,6 +8,7 @@ var alertStates = {
   WARNING: "warning"
 }
 
+//
 var queueFunction = {
   POSTVOTES:    "postVotes",
   POSTCOMMENTS: "postComments",
@@ -19,97 +21,111 @@ var queueFunction = {
   AUSWERTUNG: "auswertung"
 }
 
+//
 var tableHeadEnum = {
 
   id: {
     dataFormatter: "runningFormatter",
     datafield: "id",
     title: "#",
-    dataSortable: "false"
+    dataSortable: "false",
+    datafiltercontrol: ""
   },
 
   account: {
     dataFormatter: "",
     datafield: "account",
     title: "Account",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   permlink: {
     dataFormatter: "",
     datafield: "permlink",
     title: "Permlink",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   upvote: {
     dataFormatter: "",
     datafield: "upvote",
     title: "Hauptbeitrag Upvote in %",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   commentLink: {
     dataFormatter: "",
     datafield: "commentLink",
     title: "Link",
-    dataSortable: "false"
+    dataSortable: "false",
+    datafiltercontrol: "input"
   },
 
   commentBody: {
     dataFormatter: "",
     datafield: "commentBody",
     title: "Kommentar",
-    dataSortable: "false"
+    dataSortable: "false",
+    datafiltercontrol: "input"
   },
 
   commentVotes: {
     dataFormatter: "",
     datafield: "commentVotes",
     title: "Kommentar Votes",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   commentReplies: {
     dataFormatter: "",
     datafield: "commentReplies",
     title: "Antworten",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   commentCount: {
     dataFormatter: "",
     datafield: "commentCount",
     title: "Anzahl Kommentare",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   reblogged: {
     dataFormatter: "",
     datafield: "reblogged",
     title: "Resteemed",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "select"
   },
 
   postVotes: {
     dataFormatter: "",
     datafield: "postVotes",
     title: "Post Votes",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   wertung: {
     dataFormatter: "",
     datafield: "wertung",
     title: "Wertung",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "input"
   },
 
   follower: {
     dataFormatter: "",
     datafield: "follower",
     title: "Follower",
-    dataSortable: "true"
+    dataSortable: "true",
+    datafiltercontrol: "select"
   }
 }
 
@@ -183,6 +199,8 @@ var tabeleHeadFields = [
   tableHeadEnum.follower
 ];
 
+//------------------------------------------------------------------------------
+//
 function getFieldObj(fieldTitle){
 
   for (var i = 0; i < tabeleHeadFields.length; i++) {
