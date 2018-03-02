@@ -10,11 +10,11 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css">
-    <link rel="stylesheet" href="css/slideout.css">
-    <link rel="stylesheet" href="css/bootstrap-tagsinput.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-table.css">
+    <link rel="stylesheet" type="text/css" href="css/slideout.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,144 +24,146 @@
     <![endif]-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+    <script type="text/javascript" src="js/bootstrap-table.js"></script>
 
     <script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
-    <script src="js/slideout.min.js"></script>
-    <script src="js/bootstrap-tagsinput.js"></script>
-    <script src="extensions/export/bootstrap-table-export.js"></script>
+    <script type="text/javascript" src="js/slideout.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-tagsinput.js"></script>
+    <script type="text/javascript" src="extensions/export/bootstrap-table-export.js"></script>
     <script type="text/javascript" src="extensions/export/tableExport.min.js"></script>
     <script type="text/javascript" src="extensions/key-events/bootstrap-table-key-events.min.js"></script>
+    <script type="text/javascript" src="extensions/selectFilter2/bootstrap-table-select2-filter.js"></script>
 
-    <script src="js/beer-data.js"></script>
-    <script src="js/beer-ui.js"></script>
-    <script src="js/beer-code.js"></script>
+    <script type="text/javascript" src="js/beer-data.js"></script>
+    <script type="text/javascript" src="js/beer-ui.js"></script>
+    <script type="text/javascript" src="js/beer-code.js"></script>
   </head>
   <body>
 
-    <div id="myAlert">
-
-    </div>
+    <div id="myAlert"></div>
 
     <nav id="menu" class="menu slideout-menu slideout-menu-left">
 
     	<section class="menu-section">
           <div class="container-fluid">
-
               <h4>Einstellungen</h4>
 
               <hr>
 
-              <!------------------------------------------------------->
-              <h5>Datenbasis</h5>
+              <div>
+                <h5>Datenbasis</h5>
 
-              <div class="radio">
-                <label for="radioPostVotes">
+                <div class="radio">
+                  <label for="radioPostVotes">
 
-                  <input type="radio" id="radioPostVotes"
-                    aria-describedby="radioPostVotesHelp"
-                    name="postDatenbasis" value="postVotes" checked> Votes
+                    <input type="radio" id="radioPostVotes"
+                      aria-describedby="radioPostVotesHelp"
+                      name="postDatenbasis" value="postVotes" checked> Votes
 
-                </label>
-                <br>
-                <small id="radioPostVotesHelp" class="form-text text-muted">Basis der Auswertung sind die Votes des Hauptbeitrags.</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="radioPostVotesHelp" class="form-text text-muted">Basis der Auswertung sind die Votes des Hauptbeitrags.</small>
+                </div>
 
-              <div class="radio">
-                <label for="radioPostComments">
+                <div class="radio">
+                  <label for="radioPostComments">
 
-                  <input type="radio" id="radioPostComments"
-                    aria-describedby="radioPostCommentsHelp"
-                    name="postDatenbasis" value="postComments"> Kommentare
+                    <input type="radio" id="radioPostComments"
+                      aria-describedby="radioPostCommentsHelp"
+                      name="postDatenbasis" value="postComments"> Kommentare
 
-                </label>
-                <br>
-                <small id="radioPostCommentsHelp" class="form-text text-muted">Basis der Auswertung sind die Kommentare des Hauptbeitrags.</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="radioPostCommentsHelp" class="form-text text-muted">Basis der Auswertung sind die Kommentare des Hauptbeitrags.</small>
+                </div>
 
-              <div class="radio">
-                <label for="radioPostResteems">
+                <div class="radio">
+                  <label for="radioPostResteems">
 
-                  <input type="radio" id="radioPostResteems"
-                    aria-describedby="radioPostResteemsHelp"
-                    name="postDatenbasis" value="postResteems"> Resteems
+                    <input type="radio" id="radioPostResteems"
+                      aria-describedby="radioPostResteemsHelp"
+                      name="postDatenbasis" value="postResteems"> Resteems
 
-                </label>
-                <br>
-                <small id="radioPostResteemsHelp" class="form-text text-muted">Basis der Auswertung sind die Resteems des Hauptbeitrags.</small>
+                  </label>
+                  <br>
+                  <small id="radioPostResteemsHelp" class="form-text text-muted">Basis der Auswertung sind die Resteems des Hauptbeitrags.</small>
+                </div>
+
               </div>
 
               <hr>
 
-              <h5>Basisdaten ergänzen um:</h5>
+              <div>
+                <h5>Basisdaten ergänzen um:</h5>
 
-              <div id="plusUpvotes" class="checkbox hidden">
-                <label for="checkboxPlusUpvotes">
+                <div id="plusUpvotes" class="checkbox hidden">
+                  <label for="checkboxPlusUpvotes">
 
-                  <input type="checkbox" id="checkboxPlusUpvotes"
-                    aria-describedby="checkboxPlusUpvotesHelp" value="plusVotes"> Upvotes
+                    <input type="checkbox" id="checkboxPlusUpvotes"
+                      aria-describedby="checkboxPlusUpvotesHelp" value="plusVotes"> Upvotes
 
-                </label>
-                <br>
-                <small id="checkboxPlusUpvotesHelp" class="form-text text-muted">Angabe des Upvotes des Users</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="checkboxPlusUpvotesHelp" class="form-text text-muted">Angabe des Upvotes des Users</small>
+                </div>
 
-              <div id="plusComments" class="checkbox">
-                <label for="checkboxPlusComments">
+                <div id="plusComments" class="checkbox">
+                  <label for="checkboxPlusComments">
 
-                  <input type="checkbox" id="checkboxPlusComments"
-                    aria-describedby="checkboxPlusCommentsHelp" value="plusComments"> Kommentare
+                    <input type="checkbox" id="checkboxPlusComments"
+                      aria-describedby="checkboxPlusCommentsHelp" value="plusComments"> Kommentare
 
-                </label>
-                <br>
-                <small id="checkboxPlusCommentsHelp" class="form-text text-muted">Angaben über Kommentar/e des Users</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="checkboxPlusCommentsHelp" class="form-text text-muted">Angaben über Kommentar/e des Users</small>
+                </div>
 
-              <div id="plusResteems" class="checkbox">
-                <label for="checkboxPlusResteems">
+                <div id="plusResteems" class="checkbox">
+                  <label for="checkboxPlusResteems">
 
-                  <input type="checkbox" id="checkboxPlusResteems"
-                    aria-describedby="checkboxPlusResteemsHelp" value="plusResteems"> Resteem
+                    <input type="checkbox" id="checkboxPlusResteems"
+                      aria-describedby="checkboxPlusResteemsHelp" value="plusResteems"> Resteem
 
-                </label>
-                <br>
-                <small id="checkboxPlusResteemsHelp" class="form-text text-muted">Angabe, ob der User aus der Liste den Beitrag resteemed hat.</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="checkboxPlusResteemsHelp" class="form-text text-muted">Angabe, ob der User aus der Liste den Beitrag resteemed hat.</small>
+                </div>
 
-              <div id="plusFollower" class="checkbox">
-                <label for="checkboxPlusFollower">
+                <div id="plusFollower" class="checkbox">
+                  <label for="checkboxPlusFollower">
 
-                  <input type="checkbox" id="checkboxPlusFollower"
-                    aria-describedby="checkboxPlusFollowerHelp" value="plusFollower"> Follower
+                    <input type="checkbox" id="checkboxPlusFollower"
+                      aria-describedby="checkboxPlusFollowerHelp" value="plusFollower"> Follower
 
-                </label>
-                <br>
-                <small id="checkboxPlusFollowerHelp" class="form-text text-muted">Ist der angegebene Benutzer, Follower des Beitragautors.</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="checkboxPlusFollowerHelp" class="form-text text-muted">Ist der angegebene Benutzer, Follower des Beitragautors.</small>
+                </div>
 
-              <div class="checkbox hidden">
-                <label for="checkboxPostCommentsLinks">
+                <div class="checkbox hidden">
+                  <label for="checkboxPostCommentsLinks">
 
-                  <input type="checkbox" id="checkboxPostCommentsLinks"
-                    aria-describedby="checkboxPostCommentsLinksHelp"> Kommentarverlinkung auf Beiträge
+                    <input type="checkbox" id="checkboxPostCommentsLinks"
+                      aria-describedby="checkboxPostCommentsLinksHelp"> Kommentarverlinkung auf Beiträge
 
-                </label>
-                <br>
-                <small id="checkboxPostCommentsLinksHelp" class="form-text text-muted">Es sollen die in den Kommentaren verlinkten Posts ausgeweret werden.</small>
-              </div>
+                  </label>
+                  <br>
+                  <small id="checkboxPostCommentsLinksHelp" class="form-text text-muted">Es sollen die in den Kommentaren verlinkten Posts ausgeweret werden.</small>
+                </div>
 
-              <div class="checkbox hidden">
-                <label for="checkboxWertung">
+                <div class="checkbox hidden">
+                  <label for="checkboxWertung">
 
-                  <input type="checkbox" id="checkboxWertung"
-                    aria-describedby="checkboxWertungHelp"> Auswertung
+                    <input type="checkbox" id="checkboxWertung"
+                      aria-describedby="checkboxWertungHelp"> Auswertung
 
-                </label>
-                <br>
-                <small id="checkboxWertungHelp" class="form-text text-muted">Soll eine Auswertung erstellt werden?</small>
+                  </label>
+                  <br>
+                  <small id="checkboxWertungHelp" class="form-text text-muted">Soll eine Auswertung erstellt werden?</small>
+                </div>
               </div>
 
               <br>
@@ -202,22 +204,23 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">
+              <a class="navbar-brand pull-right" href="#">
                 <i class="fab fa-connectdevelop"></i> SteemitEva
               </a>
+              <button id="slideout-btn" type="button" class="btn btn-default pull-left js-slideout-toggle">
+                <i class="glyphicon glyphicon-cog"></i>
+              </button>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- Collect the nav links, forms, and other content for toggling
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li class="nav-item active">
                   <a class="nav-link" href="index.html">Auswertung</a>
                 </li>
               </ul>
-              <button id="slideout-btn" type="button" class="btn btn-default pull-right js-slideout-toggle">
-                <i class="glyphicon glyphicon-cog"></i>
-              </button>
-            </div><!-- /.navbar-collapse -->
+            </div> /.navbar-collapse -->
+
         </nav>
 
         <div id="eingabe" class="container-fluid">
@@ -280,7 +283,7 @@
             data-search="true"
             data-pagination="true"
             data-search="true"
-            data-key-events="true"
+            data-filter-control="true"
             data-show-export="true">
               <thead>
                 <tr>
