@@ -69,14 +69,14 @@ $(document).ready(function() {
       $('button[name=refresh] i').addClass('glyphicon-random icon-random');
       $('button[name=refresh]').prop('title', 'Randomize');
 
+      $('button[name=refresh]').click(function(){
+        dataList.shuffle();
+        $('#result-table').bootstrapTable("load", prepareData());
+      });
+
     });
 
     return false;
-   });
-
-   $('button[name=refresh]').click(function(){
-     dataList.shuffle();
-     $('#result-table').bootstrapTable("load", prepareData());
    });
 
    $( window ).resize(function() {
