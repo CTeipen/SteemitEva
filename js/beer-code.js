@@ -15,6 +15,8 @@
 *
 **/
 
+//------------------------------------------------------------------------------
+//
 function evaluate(_callback){
 
   if(queueFunctions.length > 0) {
@@ -43,6 +45,8 @@ function evaluate(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function plusCallbackCheck(_callback){
 
   if(queueFunctions.length > 1){
@@ -59,6 +63,8 @@ function plusCallbackCheck(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function plusSwitch(expression, _callbackPlus) {
 
   switch (expression) {
@@ -111,6 +117,8 @@ function plusSwitch(expression, _callbackPlus) {
   }
 }
 
+//------------------------------------------------------------------------------
+//
 function getMainPostRebloggedByPlus(_callback){
 
   steem.api.getRebloggedBy(parent, parentPermlink, function(err, result) {
@@ -125,6 +133,8 @@ function getMainPostRebloggedByPlus(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getMainPostRebloggedBy(_callback){
 
   steem.api.getRebloggedBy(parent, parentPermlink, function(err, result) {
@@ -155,6 +165,8 @@ function getMainPostRebloggedBy(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getMainPostVotesPlus(){
 
   var counter = 0;
@@ -176,6 +188,8 @@ function getMainPostVotesPlus(){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getMainPostVotes(){
 
   for (var i = 0; i < mainPost.active_votes.length; i++) {
@@ -195,6 +209,8 @@ function getMainPostVotes(){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getReplyPosts(_callback){
 
   var counter = 0;
@@ -225,6 +241,8 @@ function getReplyPosts(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getMainPostComments(_callback){
 
   steem.api.getContentReplies(parent, parentPermlink, function (err, result) {
@@ -264,6 +282,8 @@ function getMainPostComments(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getMainPostCommentsPlus(_callback){
 
   steem.api.getContentReplies(parent, parentPermlink, function (err, result) {
@@ -296,6 +316,8 @@ function getMainPostCommentsPlus(_callback){
 
 }
 
+//------------------------------------------------------------------------------
+//
 function getFollowerCount(_countCallback){
   steem.api.getFollowCount(parent, function(err, result) {
     //console.log(err, result);
@@ -305,6 +327,8 @@ function getFollowerCount(_countCallback){
   });
 }
 
+//------------------------------------------------------------------------------
+//
 function getFollowers(_callback){
   getFollowerCount(function(anzahl){
 
@@ -329,6 +353,8 @@ function getFollowers(_callback){
   });
 }
 
+//------------------------------------------------------------------------------
+//
 function getFollowerPart(start, _callback){
   steem.api.getFollowers(parent, start, 'blog', 1000, function(err, result) {
     if(result != undefined){
@@ -337,6 +363,8 @@ function getFollowerPart(start, _callback){
   });
 }
 
+//------------------------------------------------------------------------------
+//
 function $_GET(param) {
 	var vars = {};
 	window.location.href.replace( location.hash, '' ).replace(
@@ -352,7 +380,8 @@ function $_GET(param) {
 	return vars;
 }
 
-
+//------------------------------------------------------------------------------
+// 
 Array.prototype.shuffle = function() {
     var input = this;
 
