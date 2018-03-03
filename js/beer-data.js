@@ -56,6 +56,14 @@ var tableHeadEnum = {
     datafiltercontrol: "input"
   },
 
+  upvoteWeight: {
+    dataFormatter: "",
+    datafield: "upvoteWeight",
+    title: "Hauptbeitrag Upvote Gewichtung",
+    dataSortable: "true",
+    datafiltercontrol: "input"
+  },
+
   commentLink: {
     dataFormatter: "",
     datafield: "commentLink",
@@ -160,7 +168,8 @@ var tableFields = {
 
   postVotes: [tableHeadEnum.id,
               tableHeadEnum.account,
-              tableHeadEnum.upvote],
+              tableHeadEnum.upvote,
+              tableHeadEnum.upvoteWeight],
 
   postComments: [tableHeadEnum.id,
                  tableHeadEnum.account,
@@ -172,7 +181,8 @@ var tableFields = {
   postResteems: [tableHeadEnum.id,
                  tableHeadEnum.account],
 
-  plusVotes: [tableHeadEnum.upvote],
+  plusVotes: [tableHeadEnum.upvote,
+              tableHeadEnum.upvoteWeight],
 
   plusComments: [tableHeadEnum.commentCount],
 
@@ -188,6 +198,7 @@ var tabeleHeadFields = [
   tableHeadEnum.account,
   tableHeadEnum.permlink,
   tableHeadEnum.upvote,
+  tableHeadEnum.upvoteWeight,
   tableHeadEnum.commentLink,
   tableHeadEnum.commentBody,
   tableHeadEnum.commentVotes,

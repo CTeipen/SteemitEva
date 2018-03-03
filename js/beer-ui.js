@@ -198,6 +198,7 @@ function prepareData(){
   for (var i = 0; i < dataList.length; i++) {
 
     var parVote = ((dataList[i].mainUpvote.percent != undefined) ? dataList[i].mainUpvote.percent / 100 : 0);
+    var parVoteWeight = ((dataList[i].mainUpvote.weight != undefined) ? dataList[i].mainUpvote.weight : 0);
     var comVotes = ((dataList[i].comment != "") ? dataList[i].comment.net_votes : 0);
     var kommentar = ((dataList[i].comment != "") ? dataList[i].comment : undefined);
     var kommentarZaehler = ((dataList[i].commentCount != undefined) ? dataList[i].commentCount : 0);
@@ -212,6 +213,7 @@ function prepareData(){
       account: dataList[i].account,
       permlink: "",
       upvote: parVote,
+      upvoteWeight: parVoteWeight,
       commentLink: link,
       commentBody: ((kommentar != undefined) ? kommentar.body : ""),
       commentVotes: ((kommentar != undefined) ? kommentar.net_votes : "n/a"),
