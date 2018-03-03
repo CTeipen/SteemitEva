@@ -254,9 +254,10 @@ function fillUIWithData(){
   $("#result-table").fadeIn();
   $(".bootstrap-table").fadeIn();
 
+  $('#evalink').empty();
   var evaLink = '<a class="btn btn-info" href="index.html?author=' + parent + '&link=' + parentPermlink + '">' +
   '<i class="glyphicon glyphicon-link"></i> Link zur Auswertung</a>';
-  $('#eingabe form').append(evaLink);
+  $('#evalink').append(evaLink);
 
 }
 
