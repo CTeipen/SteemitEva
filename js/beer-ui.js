@@ -219,10 +219,10 @@ function prepareData(){
       commentVotes: ((kommentar != undefined) ? kommentar.net_votes : "n/a"),
       commentReplies: ((kommentar != undefined) ? kommentar.children : "n/a"),
       commentCount: kommentarZaehler,
-      reblogged: dataList[i].mainResteemed ? '✔' : 'x',
+      reblogged: dataList[i].mainResteemed ? 'Ja' : 'Nein',
       postVotes: "",
       wertung: "",
-      follower: dataList[i].following ? '✔' : 'x'
+      follower: dataList[i].following ? 'Ja' : 'Nein'
     };
 
     dataSet.push(row);
