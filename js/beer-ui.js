@@ -45,6 +45,8 @@ $(document).ready(function() {
 
   $(document).on('submit', '#dateneingabe', function() {
 
+    slideout.close();
+
     parent = $('#inputAuthor').val();
     parentPermlink = $('#inputLink').val();
 
