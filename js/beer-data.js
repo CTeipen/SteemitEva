@@ -163,6 +163,12 @@ var dataList = [];
 // Slideout für die Einstellungen;
 var slideout;
 
+// Eingabe-Zähler für die Prüfung ob wirklich etwas im Input-Feld verändert wurde
+var inputCounter = 0;
+
+// Speichert die InputUrl um Veränderungen erkennen zu können
+var inputUrl = "";
+
 // Mögliche Tabellen Felder für die Basisdaten
 var tableFields = {
 

@@ -226,6 +226,24 @@
         <div id="eingabe" class="container-fluid">
             <form id="dateneingabe">
 
+              <div id="inputUrlGroup" class="form-group has-feedback">
+                <label class="control-label" for="inputUrl">URL</label>
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fas fa-link"></i>
+                  </span>
+
+                  <input type="text" class="form-control" id="inputUrl"
+                  aria-describedby="urlHelp" placeholder="Geben Sie den Link zum Beitrag an"
+                  autocomplete="off" autocapitalize="off">
+
+                </div>
+
+                <small id="urlHelp" class="form-text text-muted">Der Link zum Beitrag oder Kommentar.</small>
+              </div>
+
+              <hr>
+
               <div id="inputAuthorGroup" class="form-group has-feedback">
                 <label class="control-label" for="inputAuthor">Account</label>
                 <div class="input-group">

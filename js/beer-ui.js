@@ -35,12 +35,13 @@ $(document).ready(function() {
 
   });
 
+  handleInputUrl();
   handleInputAuthor();
   handleInputLink();
 
   handleAlerts();
 
-  checkGet();
+  checkGet($_GET("author"), $_GET("link"));
 
   $(document).on('submit', '#dateneingabe', function() {
 
@@ -321,10 +322,7 @@ function handleAlerts(){
 
 // --- CHECKGET ----------------------------------------------------------------
 //
-function checkGet(){
-
-  var getAuthor = $_GET("author");
-  var getLink = $_GET("link");
+function checkGet(getAuthor, getLink){
 
   if(getAuthor != undefined){
     $('#inputAuthor').val(getAuthor);
@@ -601,6 +599,51 @@ function handleSaveSettings(){
 
 //------------------------------------------------------------------------------
 //
+function handleInputUrl(){
+
+  $( "#inputUrl" ).keyup(function() {
+
+    var url = $( "#inputUrl" ).val();
+
+    if(inputCounter != url.length && inputUrl != url){
+
+      if(url.length > 20){
+
+        inputCounter = url.length;
+        inputUrl = url;
+
+        var urlParts = url.split("/");
+
+        if(urlParts.length == 6 && urlParts[4].length > 0 && urlParts[5].length > 0){
+
+          var user = urlParts[4].slice(1);
+          var permlink = urlParts[5].trim();
+
+          changeInputState(1, "Url");
+          checkGet(user, permlink);
+
+        }else{
+
+          changeInputState(0, "Url");
+
+        }
+
+      }else{
+
+        $( "#inputUrlGroup" ).removeClass("has-success has-error");
+
+        inputCounter = 0;
+        inputUrl = "";
+      }
+
+    }
+
+  });
+
+}
+
+//------------------------------------------------------------------------------
+//
 function handleInputAuthor(){
 
   $( "#inputAuthor" ).keyup(function() {
@@ -671,9 +714,9 @@ function handleInputLink(){
 
 //------------------------------------------------------------------------------
 //
-function changeInputState(respsonse, type){
+function changeInputState(response, type){
 
-  if(respsonse > 0){
+  if(response > 0){
 
     $( "#input"+type+"Group" ).removeClass("has-error");
     $( "#input"+type+"Group" ).addClass("has-success");
