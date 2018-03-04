@@ -24,11 +24,19 @@ function evaluate(_callback){
     switch (queueFunctions[0]) {
 
       case queueFunction.POSTVOTES:     getMainPostVotes();
-                                        plusCallbackCheck(_callback);
+                                        if(dataList.length > 0){
+                                          plusCallbackCheck(_callback);
+                                        }else{
+                                          _callback();
+                                        }
                                         break;
 
-      case queueFunction.POSTCOMMENTS:  getMainPostComments(function(){
-                                          plusCallbackCheck(_callback);
+      case queueFunction.POSTCOMMENTS:  getMainPostComments(function(success){
+                                          if(success){
+                                            plusCallbackCheck(_callback);
+                                          }else{
+                                            _callback();
+                                          }
                                         });
                                         break;
 
@@ -127,6 +135,10 @@ function getMainPostRebloggedByPlus(_callback){
 
       _callback(result);
 
+    }else{
+
+      _callback([]);
+      
     }
 
   });
@@ -253,14 +265,20 @@ function getMainPostComments(_callback){
 
       for (var i = 0; i < result.length; i++) {
 
-        //var jsonMetadata = JSON.parse(result[i].json_metadata);
+        var jsonMetadata = JSON.parse(result[i].json_metadata);
+        var links;
 
-        //if(jsonMetadata.links != undefined && jsonMetadata.links.length == 1){
+        if(jsonMetadata.links != undefined && jsonMetadata.links.length == 1){
+
+           links = jsonMetadata.links;
+
+        }
+
 
           dataList.push({
             comment: result[i],
             account: result[i].author,
-            replyPostLink: "",//jsonMetadata.links[0],
+            replyPostLink: links,
             replyPost: '',
             mainUpvote: 0,
             mainResteemed: false,
@@ -269,12 +287,14 @@ function getMainPostComments(_callback){
 
           counter++;
 
-        //}
-
 
       }
 
-      _callback();
+      _callback(true);
+
+    }else{
+
+      _callback(false);
 
     }
 
@@ -310,6 +330,10 @@ function getMainPostCommentsPlus(_callback){
 
       _callback();
 
+    }else{
+
+      _callback();
+
     }
 
   });
@@ -320,9 +344,10 @@ function getMainPostCommentsPlus(_callback){
 //
 function getFollowerCount(_countCallback){
   steem.api.getFollowCount(parent, function(err, result) {
-    //console.log(err, result);
     if(result != undefined){
       _countCallback(result.follower_count);
+    }else{
+      _countCallback(0);
     }
   });
 }
@@ -333,21 +358,27 @@ function getFollowers(_callback){
   getFollowerCount(function(anzahl){
 
     var follower = [];
-    var times = Math.ceil(anzahl / 1000);
     var x = 0;
 
-    for (var i = 0; i < times; i++) {
+    if(anzahl > 0){
 
-      getFollowerPart(i * 1000, function(arr){
-        $.merge(follower, arr);
-        x++;
+      var times = Math.ceil(anzahl / 1000);
 
-        if(x == times){
-          //console.log(follower);
-          _callback(follower);
-        }
-      });
+      for (var i = 0; i < times; i++) {
 
+        getFollowerPart(i * 1000, function(arr){
+          $.merge(follower, arr);
+          x++;
+
+          if(x == times){
+            _callback(follower);
+          }
+        });
+
+      }
+
+    }else{
+      _callback(follower);
     }
 
   });
@@ -359,6 +390,8 @@ function getFollowerPart(start, _callback){
   steem.api.getFollowers(parent, start, 'blog', 1000, function(err, result) {
     if(result != undefined){
       _callback(result);
+    }else{
+      _callback([]);
     }
   });
 }
@@ -381,7 +414,7 @@ function $_GET(param) {
 }
 
 //------------------------------------------------------------------------------
-// 
+//
 Array.prototype.shuffle = function() {
     var input = this;
 
