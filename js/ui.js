@@ -160,7 +160,8 @@ function fillUIWithData(){
   $('#result-table').bootstrapTable({
     data: dataSet,
     pageList: [1,2,3,5,10,15,20,25,30,50,100,200],
-    escape: true
+    escape: true,
+    showMultiSort: true
   });
 
   $("#result-table").fadeIn();
