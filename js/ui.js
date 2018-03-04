@@ -1,95 +1,4 @@
 //------------------------------------------------------------------------------
-// Die Ergebnistabelle und das Ladebild werden zuerst versteckt
-$("#result-table").ready(function(){
-  $("#auswertung").hide();
-  $("#result-table").hide();
-  $("#loading").hide();
-});
-
-//------------------------------------------------------------------------------
-// Wenn die Seite geladen ist, werden die Input-Handler gesetzt (Author, Link)
-// und der Handler für den Submit-Bottun gesetzt
-$(document).ready(function() {
-
-  initSlideout();
-
-  $("#checkboxPlusUpvotes").change(function(){handlePlusCheckboxes("checkboxPlusUpvotes")});
-  $("#checkboxPlusComments").change(function(){handlePlusCheckboxes("checkboxPlusComments")});
-  $("#checkboxPlusResteems").change(function(){handlePlusCheckboxes("checkboxPlusResteems")});
-  $("#checkboxPlusFollower").change(function(){handlePlusCheckboxes("checkboxPlusFollower")});
-
-  handleTableFieldTags();
-
-  $('#saveSettings').click(function(){
-
-    var errorList = handleSaveSettings();
-
-    if(errorList.length == 0){
-      addAlert(alertStates.SUCCESS, "Daten wurden gespeichert!");
-      slideout.close();
-    }else{
-      for (var i = 0; i < errorList.length; i++) {
-        addAlert(alertStates.ERROR, errorList[i]);
-      }
-    }
-
-  });
-
-  handleInputUrl();
-  handleInputAuthor();
-  handleInputLink();
-
-  handleAlerts();
-
-  checkGet($_GET("author"), $_GET("link"));
-
-  $(document).on('submit', '#dateneingabe', function() {
-
-    slideout.close();
-
-    parent = $('#inputAuthor').val();
-    parentPermlink = $('#inputLink').val();
-
-    dataList = [];
-
-    $("#auswertung").show();
-    $("#result-table").hide();
-    $(".bootstrap-table").hide();
-    $("#loading").show();
-    $("#prost i").addClass("fa-spin");
-
-    $('#result-table').bootstrapTable("destroy");
-
-    var tmp = handleSaveSettings();
-
-    $('#evaluation-title').empty();
-    $('#evaluation-title').append(getEvaluationTitle());
-
-    evaluate(function() {
-      fillUIWithData();
-
-      $('button[name=refresh] i').removeClass('glyphicon-refresh icon-refresh');
-      $('button[name=refresh] i').addClass('glyphicon-random icon-random');
-      $('button[name=refresh]').prop('title', 'Randomize');
-
-      $('button[name=refresh]').click(function(){
-        dataList.shuffle();
-        $('#result-table').bootstrapTable("load", prepareData());
-      });
-
-    });
-
-    return false;
-   });
-
-   $( window ).resize(function() {
-     slideout.close();
-    refreshSlideout();
-  });
-
-});
-
-//------------------------------------------------------------------------------
 // Hier werden die Spaltenköpfe zusammengebaut.
 // Sie sind abhängig von den Tags, die in der Einstellungen-Sidebar angegeben
 // werden können.
@@ -250,7 +159,7 @@ function fillUIWithData(){
 
   $('#result-table').bootstrapTable({
     data: dataSet,
-    pageList: [1,3,5,10,15,20,25,30,50,100,200],
+    pageList: [1,2,3,5,10,15,20,25,30,50,100,200],
     escape: true
   });
 
@@ -757,10 +666,4 @@ function changeInputState(response, type){
 
   }
 
-}
-
-//------------------------------------------------------------------------------
-// Sorgt für konstante Indizes in der ersten Spalte der Tabelle
-function runningFormatter(value, row, index) {
-    return index + 1;
 }
