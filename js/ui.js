@@ -283,6 +283,8 @@ function initSlideout () {
     'tolerance': 70
   });
 
+  slideout.disableTouch();
+
   document.querySelector('.js-slideout-toggle').addEventListener('click', function() {
     slideout.toggle();
   });

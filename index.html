@@ -3,9 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>SteemitEva - Auswertungstool für deine Bedürfnisse</title>
+
+    <meta name="apple-mobile-web-app-title" content="SteemitEva">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-icon" href="img/touch-icon-iphone.png">
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -37,6 +44,12 @@
     <script type="text/javascript" src="extensions/key-events/bootstrap-table-key-events.min.js"></script>
     <script type="text/javascript" src="extensions/selectFilter2/bootstrap-table-select2-filter.js"></script>
 
+    <script>
+    (function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")
+    </script>
+
+
+    <!-- SteemitEva Code -->
     <script type="text/javascript" src="js/helper.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
@@ -192,7 +205,7 @@
               </select>
               <br>
               <br>
-              <!--<button id="saveSettings" class="btn btn-success"><i class="fas fa-save"></i> Speichern</button>-->
+              <button id="saveSettings" class="btn btn-success"><i class="fas fa-save"></i> Speichern</button>
           </div>
 
       </section>
@@ -228,7 +241,7 @@
         <div id="eingabe" class="container-fluid">
             <form id="dateneingabe">
 
-              <div id="inputUrlGroup" class="form-group has-feedback">
+              <div id="inputUrlGroup" class="form-group hidden-xs hidden-sm">
                 <label class="control-label" for="inputUrl">URL</label>
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -243,8 +256,6 @@
 
                 <small id="urlHelp" class="form-text text-muted">Der Link zum Beitrag oder Kommentar.</small>
               </div>
-
-              <hr>
 
               <div id="inputAuthorGroup" class="form-group has-feedback">
                 <label class="control-label" for="inputAuthor">Account</label>
@@ -304,7 +315,6 @@
             data-show-refresh="true"
             data-search="true"
             data-pagination="true"
-            data-search="true"
             data-filter-control="true"
             data-show-export="true">
               <thead>
