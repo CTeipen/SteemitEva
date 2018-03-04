@@ -16,7 +16,7 @@ The table being displayed after the evaluation can be modified according to your
 + [Projektboard](https://github.com/CTeipen/SteemitEva/projects/1)
 
 ## Thank you!
-[@detlev](https://steemit.com/@detlev) is a steemit user. He provides a challenge about the most delicious drink in the world: beer. With the tag #BeerSaturday he creates every week new post for other users to take part at this challenge. As an effect of this challenge he spent much time on evaltuating the results. So he asks me to develop a tool for this. That moment was the birth of SteemitEva.
+[@detlev](https://steemit.com/@detlev) is a steemit user. He provides a challenge about the most delicious drink in the world: beer. With the tag #BeerSaturday he creates every week new post for other users to take part at this challenge. As an effect of this challenge he spents much time on evaltuating the results. So he asks me to develop a tool for this. That moment was the birth of SteemitEva.
 
 ## License
 + MIT
